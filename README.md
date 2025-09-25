@@ -43,4 +43,5 @@ Demo Video: [SportsScheduler on YouTube](https://youtu.be/-O5M2MjxTlQ)
 ## Getting Started
 ### Clone the repository
 git clone https://github.com/Hari-Krishna-9999/SPORTSCHEDULER.git
+
 cd sports-scheduler
