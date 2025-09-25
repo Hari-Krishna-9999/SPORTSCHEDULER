@@ -1,0 +1,50 @@
+<h2>Sports Sessions</h2>
+
+<% if (user) { %>
+  <form action="/sessions/create" method="POST" class="session-form">
+    <select name="sport" required>
+      <% sports.forEach(s => { %>
+        <option value="<%= s._id %>"><%= s.name %></option>
+      <% }) %>
+    </select>
+    <input type="text" name="teamA" placeholder="Team A players (comma separated)" required>
+    <input type="text" name="teamB" placeholder="Team B players (comma separated)" required>
+    <input type="number" name="additionalPlayers" placeholder="Additional players" required>
+    <input type="datetime-local" name="date" required>
+    <input type="text" name="venue" placeholder="Venue" required>
+    <button type="submit">Create Session</button>
+  </form>
+<% } %>
+
+<ul class="sessions-list">
+  <% sessions.forEach(session => { %>
+    <li>
+      <strong><%= session.sport.name %></strong>  
+      at <%= session.venue %>  
+      on <%= session.date.toLocaleString() %>
+
+      <% if (session.cancelled) { %>
+        <span class="cancelled">Cancelled: <%= session.cancelReason %></span>
+      <% } else { %>
+
+        <!-- JOIN button -->
+        <% if (user && !session.participants.some(p => ((p._id || p).toString() === user._id.toString()))) { %>
+          <form action="/sessions/join/<%= session._id %>" method="POST" style="display:inline;">
+            <button type="submit">Join</button>
+          </form>
+        <% } else if (user) { %>
+          <span class="joined">Joined</span>
+        <% } %>
+
+        <!-- CANCEL button (only creator can see it) -->
+        <% if (user && session.createdBy && ((session.createdBy._id || session.createdBy).toString() === user._id.toString())) { %>
+          <form action="/sessions/cancel/<%= session._id %>" method="POST" style="display:inline;">
+            <input type="text" name="reason" placeholder="Reason" required>
+            <button type="submit" class="cancel-btn">Cancel</button>
+          </form>
+        <% } %>
+
+      <% } %>
+    </li>
+  <% }) %>
+</ul>

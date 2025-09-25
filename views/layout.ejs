@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sports Scheduler</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Sports Scheduler</h1>
+    <nav>
+      <% if (user) { %>
+        <a href="/">Home</a>
+        <a href="/sports">Sports</a>
+        <a href="/sessions">Sessions</a>
+        <a href="/auth/logout">Logout</a>
+      <% } else { %>
+        <a href="/auth/login">Login</a>
+        <a href="/auth/signup">Signup</a>
+      <% } %>
+    </nav>
+  </header>
+
+  <div class="container">
+    <%- body %>
+  </div>
+
+  <footer>
+    &copy; 2025 Sports Scheduler
+  </footer>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<h2>Available Sports</h2>
+
+<% if (user && user.role === 'admin') { %>
+  <form action="/sports/create" method="POST">
+    <input type="text" name="name" placeholder="Sport Name" required>
+    <button type="submit">Create Sport</button>
+  </form>
+<% } %>
+
+<ul>
+  <% sports.forEach(sport => { %>
+    <li><%= sport.name %></li>
+  <% }) %>
+</ul>

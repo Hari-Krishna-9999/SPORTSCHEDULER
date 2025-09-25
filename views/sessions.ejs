@@ -1,0 +1,44 @@
+<h2>Sports Sessions</h2>
+
+<% if (user) { %>
+  <form action="/sessions/create" method="POST">
+   <select name="sport" required>
+  <% sports.forEach(sport => { %>
+    <option value="<%= sport._id %>"><%= sport.name %></option>
+  <% }) %>
+</select>
+
+    <input type="text" name="teamA" placeholder="Team A players" required>
+    <input type="text" name="teamB" placeholder="Team B players" required>
+    <input type="number" name="additionalPlayers" placeholder="Additional players" required>
+    <input type="datetime-local" name="date" required>
+    <input type="text" name="venue" placeholder="Venue" required>
+    <button type="submit">Create Session</button>
+  </form>
+<% } %>
+
+<ul>
+  <% sessions.forEach(session => { %>
+    <li>
+      <strong><%= session.sport.name %></strong> at <%= session.venue %> on <%= session.date.toLocaleString() %>
+      <% if (session.cancelled) { %>
+        <span style="color:red;">Cancelled: <%= session.cancelReason %></span>
+      <% } else { %>
+        <% if (!session.participants.some(p => p._id.toString() === user?.id)) { %>
+          <form action="/sessions/join/<%= session._id %>" method="POST" style="display:inline;">
+            <button type="submit">Join</button>
+          </form>
+        <% } else { %>
+          Joined
+        <% } %>
+
+        <% if (session.createdBy.toString() === user?.id) { %>
+          <form action="/sessions/cancel/<%= session._id %>" method="POST" style="display:inline;">
+            <input type="text" name="reason" placeholder="Reason" required>
+            <button type="submit">Cancel</button>
+          </form>
+        <% } %>
+      <% } %>
+    </li>
+  <% }) %>
+</ul>
