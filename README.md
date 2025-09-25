@@ -1,4 +1,4 @@
-# 🏀 SportsScheduler
+#  SportsScheduler
 
 **SportsScheduler** is a web application that helps players **create, join, and manage sports sessions** with ease.  
 It enables users to organize games, track participants, and handle cancellations smoothly.
